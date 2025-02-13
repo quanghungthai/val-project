@@ -2,49 +2,65 @@ document.getElementById('yesButton').addEventListener('click', function() {
   document.getElementById('response').classList.remove('hidden');
   document.getElementById('bgMusic').play();
   fetchImagesAndStartGif();
+
+  // Make "No" button disappear when "Yes" is clicked
+  document.getElementById('noButton').style.display = "none";
 });
 
-const noButton = document.getElementById('noButton');
-
-noButton.addEventListener('mouseover', function() {
-  let rect = noButton.getBoundingClientRect();
-  let maxMove = 20; // Maximum movement distance
-
-  let newX = rect.left + (Math.random() * maxMove * 2 - maxMove);
-  let newY = rect.top + (Math.random() * maxMove * 2 - maxMove);
-
-  newX = Math.min(window.innerWidth - noButton.offsetWidth, Math.max(0, newX));
-  newY = Math.min(window.innerHeight - noButton.offsetHeight, Math.max(0, newY));
-
-  noButton.style.position = "absolute";
-  noButton.style.left = `${newX}px`;
-  noButton.style.top = `${newY}px`;
-});
-
-noButton.addEventListener('click', function(event) {
-  event.preventDefault();
-  alert("Are you sure?");
-});
-
-// Fetch images from PHP and start GIF effect
 function fetchImagesAndStartGif() {
   fetch('get_images.php')
     .then(response => response.json())
-    .then(images => {
-      if (images.length > 0) {
-        startGifEffect(images);
+    .then(data => {
+      if (data.error) {
+        console.error("PHP Error:", data.error);
+        return;
+      }
+      if (data.length > 0) {
+        startGifEffect(data);
+      } else {
+        console.error("No images found!");
       }
     })
-    .catch(error => console.error('Error loading images:', error));
+    .catch(error => console.error('Error fetching images:', error));
 }
 
 // Function to cycle through images like a GIF
 function startGifEffect(images) {
   const imgElement = document.getElementById('valentinePic');
   let imgIndex = 0;
-  
-  setInterval(() => {
-    imgElement.src = `img/${images[imgIndex]}`;
+
+  function updateImage() {
+    imgElement.src = `images/${images[imgIndex]}`; // Update image source
     imgIndex = (imgIndex + 1) % images.length;
-  }, 1000);
+  }
+
+  updateImage(); // Show first image immediately
+  setInterval(updateImage, 1000); // Change image every 1 second
 }
+
+// "No" Button Hover Effect (Moves away randomly)
+const noButton = document.getElementById('noButton');
+
+noButton.addEventListener('mouseover', function() {
+  let maxMove = 100; // Maximum movement distance
+
+  let newX = Math.random() * maxMove * 2 - maxMove; // Move randomly left or right
+  let newY = Math.random() * maxMove * 2 - maxMove; // Move randomly up or down
+
+  let buttonRect = noButton.getBoundingClientRect();
+  let parentRect = noButton.parentElement.getBoundingClientRect();
+
+  // Ensure the button stays within the card
+  let finalX = Math.min(parentRect.width - buttonRect.width, Math.max(0, buttonRect.left + newX - parentRect.left));
+  let finalY = Math.min(parentRect.height - buttonRect.height, Math.max(0, buttonRect.top + newY - parentRect.top));
+
+  noButton.style.position = "absolute";
+  noButton.style.left = `${finalX}px`;
+  noButton.style.top = `${finalY}px`;
+});
+
+// Prevent clicking No (just for fun)
+noButton.addEventListener('click', function(event) {
+  event.preventDefault();
+  alert("You can't say no! 😆");
+});
