@@ -1,0 +1,56 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e7efd6;
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background-color: #f8b4d7;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.buttons {
+  margin-top: 20px;
+  position: relative;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+#yesButton {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#yesButton:hover {
+  background-color: #45a049;
+}
+
+#noButton {
+  background-color: #ff7893;
+  color: white;
+  position: absolute;
+}
+
+.hidden {
+  display: none;
+}
+
+#valentinePic {
+  max-width: 100%;
+  margin-top: 20px;
+}
