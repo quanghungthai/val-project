@@ -1,7 +1,9 @@
 document.getElementById('yesButton').addEventListener('click', function() {
   document.getElementById('response').classList.remove('hidden');
+  document.getElementById('questionbox').classList.add('hidden');
   document.getElementById('bgMusic').play();
-  fetchImagesAndStartGif();
+  // fetchImagesAndStartGif();
+  startFallingHearts();
 
   // Make "No" button disappear when "Yes" is clicked
   document.getElementById('noButton').style.display = "none";
@@ -42,10 +44,10 @@ function startGifEffect(images) {
 const noButton = document.getElementById('noButton');
 
 noButton.addEventListener('mouseover', function() {
-  let maxMove = 100; // Maximum movement distance
+  let maxMove = 10000; // Maximum movement distance
 
-  let newX = Math.random() * maxMove * 2 - maxMove; // Move randomly left or right
-  let newY = Math.random() * maxMove * 2 - maxMove; // Move randomly up or down
+  let newX = Math.random() * maxMove * 5 - maxMove; // Move randomly left or right
+  let newY = Math.random() * maxMove * 5 - maxMove; // Move randomly up or down
 
   let buttonRect = noButton.getBoundingClientRect();
   let parentRect = noButton.parentElement.getBoundingClientRect();
@@ -64,3 +66,23 @@ noButton.addEventListener('click', function(event) {
   event.preventDefault();
   alert("You can't say no! 😆");
 });
+
+// 💖 Falling Hearts Effect
+function startFallingHearts() {
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerHTML = '❤️';
+
+    heart.style.left = `${Math.random() * 100}vw`;
+    heart.style.top = `-5vh`;
+    heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+    heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 5000);
+  }, 300);
+}

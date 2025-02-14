@@ -5,16 +5,18 @@ body {
   height: 100vh;
   background-color: #e7efd6;
   font-family: Arial, sans-serif;
-  margin: 0;
+  overflow: hidden;
 }
 
 .card {
-  background-color: #f8b4d7;
+  background-color: #d6f594;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: white;
+  color: #fd91a7;
+  position: relative;
+  z-index: 10;
 }
 
 .buttons {
@@ -30,6 +32,8 @@ button {
   border: none;
   border-radius: 5px;
   outline: none;
+  position: relative;
+  z-index: 10;
 }
 
 #yesButton {
@@ -41,8 +45,12 @@ button {
   background-color: #45a049;
 }
 
+.yestext{
+  color: #fd91a7;
+}
+
 #noButton {
-  background-color: #ff7893;
+  background-color: #fd91a7;
   color: white;
   position: absolute;
 }
@@ -51,8 +59,34 @@ button {
   display: none;
 }
 
-#valentinePic {
-  max-width: 80%;
+#willyouPic {
+  max-width: 30%;
+  height: auto;
   margin-top: 20px;
-  border-radius: 10px;
+}
+
+#valentinePic {
+  max-width: 60%;
+  height: auto;
+  margin-top: 20px;
+}
+
+/* 💖 Falling hearts effect */
+.heart {
+  position: fixed;
+  color: red;
+  font-size: 24px;
+  animation: fall 5s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
 }
